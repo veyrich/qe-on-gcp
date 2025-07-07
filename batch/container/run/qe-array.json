@@ -1,0 +1,42 @@
+{
+  "taskGroups": [
+    {"taskCount":"50",
+     "parallelism":"10",
+      "taskSpec": {
+        "runnables": [
+          {
+            "container": {
+              "imageUri": "veyrich/qe-batch:latest",
+              "entrypoint": "/tmp/data/run-Cu1.sh"
+            }
+          }
+        ],
+	"environment": {
+           "variables": {
+               "DATA_DIR": "/tmp/data"
+	   }
+        },
+        "volumes": [
+          {
+            "gcs": {
+              "remotePath": "<GCS Bucket>"
+            },
+            "mountPath": "/tmp/data"
+          }
+        ]
+      }
+    }
+  ],
+  "allocationPolicy": {
+    "instances": [
+      {
+        "policy": {
+          "machineType": "e2-standard-2"
+        }
+      }
+    ]
+  },
+  "logsPolicy": {
+    "destination": "CLOUD_LOGGING"
+  }
+}
