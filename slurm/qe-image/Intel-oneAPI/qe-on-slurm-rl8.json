@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "<project>",
+            "source_image": "slurmrl8-intel-2024-tools",
+            "source_image_project_id" : "<project>",
+            "ssh_username" : "<username>",
+            "use_internal_ip" : "true",
+            "subnetwork" : "<subnetwork>",
+            "use_os_login" : "true",
+            "zone": "us-central1-b",
+            "image_name" : "slurmrl8-qe",
+            "image_description" : "Quantum Espresso on Slurm RL8 ",
+            "disk_size" : 50,
+            "skip_create_image" : false
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "build-qe.sh",
+            "destination": "/tmp/build-qe.sh"
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "cd /tmp ; bash /tmp/build-qe.sh"
+            ]
+        }
+        ]
+}

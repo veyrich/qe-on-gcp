@@ -1,0 +1,51 @@
+{
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "<project>",
+            "source_image_family": "slurm-gcp-6-8-hpc-rocky-linux-8",
+            "source_image_project_id" : "schedmd-slurm-public",
+            "ssh_username" : "<username>",
+            "use_internal_ip" : "true",
+            "subnetwork" : "<subnetwork>",
+            "use_os_login" : "true",
+            "zone": "us-central1-b",
+            "image_name" : "slurmrl8-intel-2024-tools",
+            "image_description" : "Slurm RL8 base image with Intel 2024.2 tools",
+            "disk_size" : 50,
+            "skip_create_image" : false
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline":[
+                "cd /tmp ; gcloud storage cp gs://<gcs-bucket>/l_BaseKit_p_2024.2.0.634_offline.sh ."
+            ]
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "cd /tmp ; gcloud storage cp gs://<gcs-bucket>/l_HPCKit_p_2024.2.0.635_offline.sh ."
+            ]
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "sudo bash /tmp/l_BaseKit_p_2024.2.0.634_offline.sh -a --silent --cli --eula accept"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "sudo bash /tmp/l_HPCKit_p_2024.2.0.635_offline.sh -a --silent --cli --eula accept"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "sudo /bin/rm -f /tmp/l_BaseKit_p_2024.2.0.634_offline.sh /tmp/l_HPCKit_p_2024.2.0.635_offline.sh"
+            ]
+        }
+        ]
+}
