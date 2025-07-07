@@ -28,12 +28,13 @@ and then untar the data set archive and copy the run script
 ```
 cd tmpdir
 tar zxvf ../../../../dataset/Cu1-testcase.tgz
-cp ../run-Cu1.sh
+cp ../run-Cu1.sh .
+cd ..
 ```
 
 ## 4. Edit the Google Batch config
 
-Edit the batch config (qe-array.json) to use the actual bucketname, i.e. replace "<GCS Bucket>" with the name of the bucket created above:
+Edit the batch config [qe-array.json](https://github.com/veyrich/qe-on-gcp/blob/main/batch/container/run/qe-array.json) to use the actual bucketname, i.e. replace `<GCS Bucket>` with the name of the bucket created above:
 
 ```
 "volumes": [
@@ -57,7 +58,6 @@ and optionally change the taskcount to "1" for testing, i.e. only run one job:
 SUbmit using the helper script:
 
 ```
-cd ..
 ./submit-job.sh qe-array.json
 ```
 
