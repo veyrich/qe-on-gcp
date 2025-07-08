@@ -1,0 +1,34 @@
+{
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "<project_id>",
+            "source_image_family": "batch-hpc-rocky-linux-8-official",
+            "source_image_project_id" : "batch-custom-image",
+            "ssh_username" : "<user_name>",
+            "use_internal_ip" : "true",
+	    "use_os_login" : "true",
+            "zone": "us-central1-b",
+            "image_name" : "qe-rl8-batch",
+            "image_description" : "Quantum Espresso on RL8 for Gogole Batch",
+            "disk_size" : 30
+        }
+    ],
+    "provisioners": [
+	{
+            "type": "shell",
+	    "max_retries": "3",
+            "inline":[
+                "sudo dnf install -y epel-release; sudo /usr/bin/crb  enable; sudo dnf install -y quantum-espresso"
+            ]
+	},
+	{
+            "type": "shell",
+	    "max_retries": "3",
+            "inline":[
+                "sudo dnf install -y nfs-utils libnfs"
+            ]
+	}
+    ]
+}
+

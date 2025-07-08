@@ -1,0 +1,39 @@
+{
+    "taskGroups": [
+        {
+            "taskCount": "50",
+            "parallelism": "10",
+            "taskSpec": {
+                "computeResource": {
+                    "cpuMilli": "1000",
+                    "memoryMib": "3500"
+                },
+                "runnables": [
+                    {
+                        "script": {
+                            "text": "export DATA_DIR=/tmp/data ; /bin/bash ${DATA_DIR}/run-Cu1.sh"
+                        }
+                    }
+                ],
+		"maxRetryCount": 3,
+                "volumes": [{"gcs":{"remotePath":"<GCS bucket>"},"mountPath":"/tmp/data"}]
+            }
+        }
+    ],
+    "allocationPolicy": {
+        "instances": [
+            {
+                "policy": {
+		    "bootDisk": {
+           	     "image": "projects/<project_id>/global/images/qe-rl8-batch"
+                     },
+                     "provisioningModel": "SPOT",
+                     "machineType": "e2-standard-2"
+                }
+            }
+        ]
+    },
+    "logsPolicy": {
+        "destination": "CLOUD_LOGGING"
+    }
+}
