@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: qe-
+spec:
+  ttlSecondsAfterFinished: 120
+  completions: 1
+  parallelism: 1
+  completionMode: Indexed
+  template:
+    metadata:
+      annotations:
+        gke-gcsfuse/volumes: "true"
+    spec:
+      serviceAccountName: default
+      nodeSelector:
+        cloud.google.com/machine-family: c3d
+      containers:
+      - name: qe
+        image: veyrich/qe:latest
+        env:
+        - name: DATA_DIR
+          value: "/tmp/data/dataset"
+        command: ["bash"]
+        args: ["/tmp/data/run-Cu1.sh"]
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 8Gi
+            ephemeral-storage: 500Mi
+        volumeMounts:
+        - name: qe
+          mountPath: /tmp/data
+          readOnly: false
+      volumes:
+      - name: qe
+        csi:
+          driver: gcsfuse.csi.storage.gke.io
+          volumeAttributes:
+            bucketName: <bucketname>
+            mountOptions: "implicit-dirs"
+      restartPolicy: OnFailure
+  backoffLimit: 4
