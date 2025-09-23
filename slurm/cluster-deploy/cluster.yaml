@@ -1,4 +1,3 @@
-
 blueprint_name: cluster
 
 vars:
@@ -24,49 +23,49 @@ deployment_groups:
       local_mounts: [/home]
       disk_size: 100
 
-  - id: ns_c3_spot
+  - id: ns_n2_spot
     source: community/modules/compute/schedmd-slurm-gcp-v6-nodeset
     use: [network]
     settings:
       node_count_dynamic_max: 10
-      machine_type: c3-standard-4
+      machine_type: n2-standard-4
       enable_placement: false
       allow_automatic_updates: false
       preemptible: true
       instance_image_custom: true
-      disk_type: hyperdisk-balanced
+      disk_type: pd-ssd
       advanced_machine_features:
         threads_per_core: 1
 
-  - id: part_c3_spot
+  - id: part_n2_spot
     source: community/modules/compute/schedmd-slurm-gcp-v6-partition
     use:
-    - ns_c3_spot
+    - ns_n2_spot
     settings:
-      partition_name: c3spot
+      partition_name: n2spot
       exclusive: false
       is_default: true
 
-  - id: ns_c3_ondemand
+  - id: ns_n2_ondemand
     source: community/modules/compute/schedmd-slurm-gcp-v6-nodeset
     use: [network]
     settings:
       node_count_dynamic_max: 10
-      machine_type: c3-standard-4
+      machine_type: n2-standard-4
       enable_placement: false
       allow_automatic_updates: false
       preemptible: false
       instance_image_custom: true
-      disk_type: hyperdisk-balanced
+      disk_type: pd-ssd
       advanced_machine_features:
         threads_per_core: 1
 
-  - id: part_c3_ondemand
+  - id: part_n2_ondemand
     source: community/modules/compute/schedmd-slurm-gcp-v6-partition
     use:
-    - ns_c3_ondemand
+    - ns_n2_ondemand
     settings:
-      partition_name: c3od
+      partition_name: n2od
       exclusive: false
       is_default: false
 
@@ -82,8 +81,8 @@ deployment_groups:
     source: community/modules/scheduler/schedmd-slurm-gcp-v6-controller
     use:
     - network
-    - part_c3_spot
-    - part_c3_ondemand
+    - part_n2_spot
+    - part_n2_ondemand
     - homefs
     - slurm_login
     settings:
