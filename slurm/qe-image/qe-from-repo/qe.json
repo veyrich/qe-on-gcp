@@ -1,0 +1,29 @@
+{
+    "builders": [
+        {
+            "type" : "googlecompute",
+            "project_id" : "<projec_id>",
+            "source_image_family" : "slurm-gcp-6-9-hpc-rocky-linux-8",
+            "source_image_project_id" : "schedmd-slurm-public",
+            "ssh_username" : "auto",
+            "omit_external_ip" : "true",
+            "use_internal_ip" : "true",
+            "network" : "default",
+            "subnetwork" : "default",
+            "use_os_login" : "true",
+            "zone" : "<zone>",
+            "image_name" : "slurmrl8-qe",
+            "image_description" : "Quantum Espresso on Slurm RL8",
+            "disk_size" : 50,
+            "skip_create_image" : false
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline":[
+                "sudo dnf install -y epel-release & sudo dnf install -y quantum-espresso"
+            ]
+        }
+        ]
+}
