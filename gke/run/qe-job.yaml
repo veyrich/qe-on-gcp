@@ -14,7 +14,7 @@ spec:
     spec:
       serviceAccountName: default
       nodeSelector:
-        cloud.google.com/machine-family: c3d
+        cloud.google.com/machine-family: n2
       containers:
       - name: qe
         image: veyrich/qe:latest
