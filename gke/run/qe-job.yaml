@@ -3,7 +3,6 @@ kind: Job
 metadata:
   generateName: qe-
 spec:
-  ttlSecondsAfterFinished: 120
   completions: 1
   parallelism: 1
   completionMode: Indexed
