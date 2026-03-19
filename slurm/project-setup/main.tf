@@ -80,6 +80,20 @@ resource "google_compute_firewall" "fw_rule_iap" {
   }
 }
 
+#internal SSH
+resource "google_compute_firewall" "allow_ssh_internal" {
+  name    = "allow-ssh-internal-10-1-0-0-20"
+  network = google_compute_network.vpc_network.name
+  description = "Allows SSH traffic between VMs within the 10.1.0.0/20 subnet"
+  direction     = "INGRESS"
+  source_ranges = ["10.1.0.0/20"]
+  destination_ranges = ["10.1.0.0/20"]
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}
+
 resource "google_project_organization_policy" "disable_require_shielded_vm" {
   project    = var.project_id
   constraint = "compute.requireShieldedVm"
