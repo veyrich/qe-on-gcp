@@ -119,10 +119,19 @@ data "google_project" "project" {
      project_id = var.project_id
      }
 
-# Grant the editor role to the Compute Engine default service account
+# Grant the project editor role to the Compute Engine default service account
 resource "google_project_iam_member" "compute_default_sa_editor" {
   project = data.google_project.project.project_id
   role    = "roles/editor"
   member  = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
   depends_on = [ google_project_service.compute_api ]
 }
+
+# Grant IAP-secured Tunnel User role to the Compute Engine default service account
+resource "google_project_iam_member" "compute_default_sa_iap_tunnel_user" {
+  project = data.google_project.project.project_id
+  role    = "roles/iap.tunnelResourceAccessor"
+  member  = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  depends_on = [ google_project_service.compute_api ]
+}
+
