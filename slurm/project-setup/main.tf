@@ -29,6 +29,10 @@ resource "google_project_service" "compute_api" {
   service = "compute.googleapis.com"
 }
 
+resource "google_project_service" "batch_api" {
+  service = "batch.googleapis.com"
+}
+
 resource "google_project_service" "resource_manager_api" {
   service = "cloudresourcemanager.googleapis.com"
 }
