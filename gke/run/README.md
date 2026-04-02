@@ -8,6 +8,16 @@ Use the container mentioned in the provided manifest or prepare your own contain
 
 Use the Google Cloud console ([console.cloud.google.com](http://console.cloud.google.com)) or gcloud to create a GKE Autopilot cluster.
 
+## Install kubectl
+
+Depending on your installation use one of the two comamnds below to install kubectl:
+
+`gcloud components install kubectl`
+
+OR
+
+`sudo apt-get install kubectl`
+
 ## Get credentials
 
 `gcloud container clusters get-credentials <cluster-name> --region <region>`
