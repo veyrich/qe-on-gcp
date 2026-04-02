@@ -14,9 +14,15 @@ Depending on your installation use one of the two comamnds below to install kube
 
 `gcloud components install kubectl`
 
+`gcloud components install gke-gcloud-auth-plugin`
+
 OR
 
 `sudo apt-get install kubectl`
+
+`sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin`
+
+For details see ([this document](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)).
 
 ## Get credentials
 
