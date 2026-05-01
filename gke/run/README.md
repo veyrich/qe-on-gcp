@@ -28,6 +28,8 @@ For details see ([this document](https://docs.cloud.google.com/kubernetes-engine
 
 `gcloud container clusters get-credentials <cluster-name> --region <region>`
 
+The --internal-ip flag is required to use the internal IP address of the cluster endpoint (optional depending on how the GKE cluster was deployed).
+
 ## Create a bucket to hold the data set
 
 `gcloud storage buckets create gs://<bucket-name> --location=<region> --pap --enable-hierarchical-namespace --uniform-bucket-level-access`
